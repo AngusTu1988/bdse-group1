@@ -1,7 +1,8 @@
 import streamlit as st 
 import pandas as pd
-
+st.set_page_config(layout="wide")
 st.balloons()
+
 # st.markdown("# Data Evaluation App")
 
 # st.write("We are so glad to see you here. ✨ " 
@@ -126,7 +127,6 @@ st.pyplot(fig1)
 
 #--------------
 
-st.set_page_config(layout="wide")
 col1, col2, col3, col4, col5=st.beta_columns([0.2, 1, 0.2, 1, 0.2])
 with col1:
     st.empty()
