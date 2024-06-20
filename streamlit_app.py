@@ -109,7 +109,6 @@ st.balloons()
 # st.write("Here we are at the end of getting started with streamlit! Happy Streamlit-ing! :balloon:")
 
 import streamlit as st
-import plotly.express as px
 import matplotlib.pyplot as plt
 
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
