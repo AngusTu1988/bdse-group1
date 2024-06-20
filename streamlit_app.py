@@ -1,11 +1,10 @@
 import streamlit as st 
 import pandas as pd
 import streamlit.components.v1 as components
-
-st.balloons()
 import matplotlib.pyplot as plt
 from streamlit_echarts import st_echarts
 
+st.balloons()
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
 labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
 sizes = [15, 30, 45, 10]
