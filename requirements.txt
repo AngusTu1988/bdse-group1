@@ -3,3 +3,4 @@ matplotlib
 pandas
 plotly
 streamlit_echarts
+streamlit.components.v1
