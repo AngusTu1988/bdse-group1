@@ -110,45 +110,18 @@ st.balloons()
 
 import streamlit as st
 import plotly.express as px
+import matplotlib.pyplot as plt
 
-pie1, pie2 = st.columns(2)
+# Pie chart, where the slices will be ordered and plotted counter-clockwise:
+labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
+sizes = [15, 30, 45, 10]
+explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
 
-    with pie1:
-        options_yonelik = {
-            "legend": {"top": "top"},
-            "tooltip": {"trigger": "item", "formatter": "{a} <br/>{b}: {c} ({d}%)"},
-            "textStyle": {
-                "fontFamily": "'Poppins', sans-serif",
-                "fontWeight": 400,
-                "fontSize": 18,
-            },
-            "series": [
-                {
-                    "name": "Kimlere Yönelik Çalışır",
-                    "type": "pie",
-                    "radius": [80, 200],
-                    "center": ["50%", "50%"],
-                    "roseType": "area",
-                    "label": {
-                        "rotate": 0,
-                        "width": 200,
-                        "fontFamily": "'Poppins', sans-serif",
-                        "fontWeight": 400,
-                        "fontSize": 15,
-                    },
-                    "labelLayout": {"draggable": True},
-                    "itemStyle": {"borderRadius": 8},
-                    "color": ["#ff9898", "#af98ff", "#ffd998"],
-                    "data": [
-                        {"value": round(val, 2), "name": name}
-                        for name, val in data.loc[:, "İlgili Giriş Noktası"]
-                        .value_counts()[:3]
-                        .to_dict()
-                        .items()
-                    ],
-                }
-            ],
-        }
-        st_echarts(options_yonelik, height="600px", width="100%")
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+st.pyplot(fig1)
 
 
