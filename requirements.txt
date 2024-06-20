@@ -4,3 +4,4 @@ pandas
 plotly
 streamlit_echarts
 streamlit.components
+Python==3.11
