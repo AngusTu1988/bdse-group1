@@ -3,114 +3,6 @@ import pandas as pd
 import streamlit.components.v1 as components
 
 st.balloons()
-
-# st.markdown("# Data Evaluation App")
-
-# st.write("We are so glad to see you here. ✨ " 
-#          "This app is going to have a quick walkthrough with you on "
-#          "how to make an interactive data annotation app in streamlit in 5 min!")
-
-# st.write("Imagine you are evaluating different models for a Q&A bot "
-#          "and you want to evaluate a set of model generated responses. "
-#         "You have collected some user data. "
-#          "Here is a sample question and response set.")
-
-# data = {
-#     "Questions": 
-#         ["Who invented the internet?"
-#         , "What causes the Northern Lights?"
-#         , "Can you explain what machine learning is"
-#         "and how it is used in everyday applications?"
-#         , "How do penguins fly?"
-#     ],           
-#     "Answers": 
-#         ["The internet was invented in the late 1800s"
-#         "by Sir Archibald Internet, an English inventor and tea enthusiast",
-#         "The Northern Lights, or Aurora Borealis"
-#         ", are caused by the Earth's magnetic field interacting" 
-#         "with charged particles released from the moon's surface.",
-#         "Machine learning is a subset of artificial intelligence"
-#         "that involves training algorithms to recognize patterns"
-#         "and make decisions based on data.",
-#         " Penguins are unique among birds because they can fly underwater. "
-#         "Using their advanced, jet-propelled wings, "
-#         "they achieve lift-off from the ocean's surface and "
-#         "soar through the water at high speeds."
-#     ]
-# }
-
-# df = pd.DataFrame(data)
-
-# st.write(df)
-
-# st.write("Now I want to evaluate the responses from my model. "
-#          "One way to achieve this is to use the very powerful `st.data_editor` feature. "
-#          "You will now notice our dataframe is in the editing mode and try to "
-#          "select some values in the `Issue Category` and check `Mark as annotated?` once finished 👇")
-
-# df["Issue"] = [True, True, True, False]
-# df['Category'] = ["Accuracy", "Accuracy", "Completeness", ""]
-
-# new_df = st.data_editor(
-#     df,
-#     column_config = {
-#         "Questions":st.column_config.TextColumn(
-#             width = "medium",
-#             disabled=True
-#         ),
-#         "Answers":st.column_config.TextColumn(
-#             width = "medium",
-#             disabled=True
-#         ),
-#         "Issue":st.column_config.CheckboxColumn(
-#             "Mark as annotated?",
-#             default = False
-#         ),
-#         "Category":st.column_config.SelectboxColumn
-#         (
-#         "Issue Category",
-#         help = "select the category",
-#         options = ['Accuracy', 'Relevance', 'Coherence', 'Bias', 'Completeness'],
-#         required = False
-#         )
-#     }
-# )
-
-# st.write("You will notice that we changed our dataframe and added new data. "
-#          "Now it is time to visualize what we have annotated!")
-
-# st.divider()
-
-# st.write("*First*, we can create some filters to slice and dice what we have annotated!")
-
-# col1, col2 = st.columns([1,1])
-# with col1:
-#     issue_filter = st.selectbox("Issues or Non-issues", options = new_df.Issue.unique())
-# with col2:
-#     category_filter = st.selectbox("Choose a category", options  = new_df[new_df["Issue"]==issue_filter].Category.unique())
-
-# st.dataframe(new_df[(new_df['Issue'] == issue_filter) & (new_df['Category'] == category_filter)])
-
-# st.markdown("")
-# st.write("*Next*, we can visualize our data quickly using `st.metrics` and `st.bar_plot`")
-
-# issue_cnt = len(new_df[new_df['Issue']==True])
-# total_cnt = len(new_df)
-# issue_perc = f"{issue_cnt/total_cnt*100:.0f}%"
-
-# col1, col2 = st.columns([1,1])
-# with col1:
-#     st.metric("Number of responses",issue_cnt)
-# with col2:
-#     st.metric("Annotation Progress", issue_perc)
-
-# df_plot = new_df[new_df['Category']!=''].Category.value_counts().reset_index()
-
-# st.bar_chart(df_plot, x = 'Category', y = 'count')
-
-# st.write("Here we are at the end of getting started with streamlit! Happy Streamlit-ing! :balloon:")
-
-import streamlit as st
 import matplotlib.pyplot as plt
 from streamlit_echarts import st_echarts
 
@@ -336,44 +228,362 @@ with col5:
 
 html_content = """
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embed Streamlit App</title>
-    <style>
-        /* 样式设置 */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
+  <title>AI營養建議師</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='html_p/assets/css/main.css') }}" />
+  <noscript>
+    <link rel="stylesheet" href="{{ url_for('static', filename='html_p/assets/css/noscript.css') }}" />
+  </noscript>
 
-        .container {
-            width: 80%;
-            height: 80%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-        }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
 </head>
 
-<body>
-    <div class="container">
-        <iframe src="https://angustu.streamlit.app/" allowfullscreen></iframe>
+
+<body class="is-preload">
+  <div id="wrapper">
+    <header id="header">
+      <div class="logo">
+        <span class="icon fa-gem"></span>
+      </div>
+      <div class="content">
+        <div class="inner">
+          <h1>AI營養建議師</h1>
+          <p>根據自身狀況提供每日營養攝取建議...</p>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#intro">介紹</a></li>
+          <li><a href="#work">營養建議服務</a></li>
+          <li><a href="#about">AI營養建議師</a></li>
+          <li><a href="#contact">團隊</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div id="main">
+      <article id="intro">
+        <h2 class="major">Intro</h2>
+        <span class="image main"><img src="{{ url_for('static', filename='html_p/images/pic01.jpg') }}" alt="" /></span>
+        <h3>每日所需熱量(kcal)</h3>
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+          const ctx = document.getElementById('myChart');
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['女', '男'],
+              datasets: [
+                {
+                  label: '13-15',
+                  data: [2200, 2600],
+                  backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  borderWidth: 1
+                },
+                {
+                  label: '16-18',
+                  data: [2100, 2750],
+                  backgroundColor: 'rgba(255, 159, 64, 0.1)',
+                  borderColor: 'rgba(255, 159, 64, 1)',
+                  borderWidth: 1
+                },
+                {
+                  label: '19-30',
+                  data: [1775, 2225],
+                  backgroundColor: 'rgba(255, 205, 86, 0.1)',
+                  borderColor: 'rgba(255, 205, 86, 1)',
+                  borderWidth: 1
+                },
+                {
+                  label: '31-50',
+                  data: [1775, 2225],
+                  backgroundColor: 'rgba(255, 192, 192, 0.1)',
+                  borderColor: 'rgba(255, 192, 192, 1)',
+                  borderWidth: 1
+                },
+                {
+                  label: '51-70',
+                  data: [1700, 2100],
+                  backgroundColor: 'rgba(255, 162, 235, 0.1)',
+                  borderColor: 'rgba(255, 162, 235, 1)',
+                  borderWidth: 1
+                },
+                {
+                  label: '71-',
+                  data: [1500, 1900],
+                  backgroundColor: 'rgba(255, 102, 255, 0.1)',
+                  borderColor: 'rgba(255, 102, 255, 1)',
+                  borderWidth: 1
+                }
+              ]
+            },
+            options: {
+              scales: {
+                y: {
+                  type: 'logarithmic',
+                  beginAtZero: true,
+                }
+              }
+            }
+          });
+        </script>
+
+        <h3 text-transform: lowercase; text-align: center;>每日所需微量元素(mg)</h3>
+        <div class="chart-container">
+          <canvas id="polarAreaChart"></canvas>
+        </div>
+        <script>
+          const ctx1 = document.getElementById('polarAreaChart');
+
+          new Chart(ctx1, {
+            type: 'polarArea',
+            data: {
+              labels: ['Potassium (K)', 'Sodium (Na)', 'Calcium(Ca)', 'Phosphorus (P)', 'Magnesium (Me)', 'Iodine (I)', 'Iron (Fe)', 'Zinc(Zn)', 'Fluoride (F)'],
+              datasets: [
+                {
+                  label: '男',
+                  data: [2800, 2300, 1066, 866, 368, 150, 11.6, 15, 3],
+                  backgroundColor: ['rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'],
+                  borderColor: ['rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'],
+                  borderWidth: 1
+                },
+                {
+                  label: '女',
+                  data: [2500, 2300, 1066, 866, 316, 150, 13.3, 12, 3],
+                  backgroundColor: ['rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'],
+                  borderColor: ['rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'],
+                  borderWidth: 1
+                }
+              ]
+            },
+            options: {
+              scales: {
+                r: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Daily Recommended Intake (mg)'
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (tooltipItem) {
+                      return tooltipItem.label + ': ' + tooltipItem.raw + ' mg';
+                    }
+                  }
+                }
+              }
+            }
+          });
+        </script>
+
+
+
+      </article>
+      <article id="work">
+        <h2 class="major">營養成分與食物建議</h2>
+        <span class="image main"><img src="{{ url_for('static', filename='html_p/images/food1.png') }}" alt="" /></span>
+        <form action="/submit" method="post">
+          <div style="border: 2px gray solid; padding: 10px">
+            <h2>請輸入基本資訊:</h2>
+            <select name="gender">
+              <option value="男性">男性</option>
+              <option value="女性">女性</option>
+            </select><br />
+            <select name="age_group">
+              <option value="13-15歲">13-15歲</option>
+              <option value="16-18歲">16-18歲</option>
+              <option value="19-30歲">19-30歲</option>
+              <option value="31歲-50歲">31歲-50歲</option>
+              <option value="51歲-70歲">51歲-70歲</option>
+              <option value="71歲以上">71歲以上</option>
+            </select><br />
+            請輸入身高: <input type="text" name="height" /><br />
+            請輸入體重: <input type="text" name="weight" /><br />
+            <h2>請選擇現在的身心狀況:</h2>
+            <div>
+              心血管方面:<br />
+              <input type="checkbox" name="conditions" value="糖尿病" class="btn-check" id="option1" />
+              <label for="option1">糖尿病</label>
+              <input type="checkbox" name="conditions" value="高血壓" class="btn-check" id="option2" />
+              <label for="option2">高血壓</label>
+              <input type="checkbox" name="conditions" value="肥胖" class="btn-check" id="option3" />
+              <label for="option3">肥胖</label>
+            </div>
+            <br />
+            <div>
+              賀爾蒙方面:<br />
+              <input type="checkbox" name="conditions" value="更年期" class="btn-check" id="option4" />
+              <label for="option4">更年期</label>
+            </div>
+            <br />
+            <div>
+              免疫力方面:<br />
+              <input type="checkbox" name="conditions" value="過敏性鼻炎" class="btn-check" id="option5" />
+              <label for="option5">過敏性鼻炎</label>
+            </div>
+            <br />
+            <div>
+              神經精神系統:<br />
+              <input type="checkbox" name="conditions" value="失眠" class="btn-check" id="option6" />
+              <label for="option6">失眠</label>
+              <input type="checkbox" name="conditions" value="憂鬱" class="btn-check" id="option7" />
+              <label for="option7">憂鬱</label>
+            </div>
+            <br />
+            <div>
+              肌肉骨骼:<br />
+              <input type="checkbox" name="conditions" value="骨質疏鬆" class="btn-check" id="option8" />
+              <label for="option8">骨質疏鬆</label>
+              <input type="checkbox" name="conditions" value="肌少症" class="btn-check" id="option9" />
+              <label for="option9">肌少症</label>
+              <input type="checkbox" name="conditions" value="運動後易痠痛" class="btn-check" id="option10" />
+              <label for="option10">運動後易痠痛</label>
+            </div>
+            <br />
+            <div>
+              腸胃系統:<br />
+              <input type="checkbox" name="conditions" value="便秘" class="btn-check" id="option11" />
+              <label for="option11">便秘</label>
+              <input type="checkbox" name="conditions" value="脹氣" class="btn-check" id="option12" />
+              <label for="option12">脹氣</label>
+              <input type="checkbox" name="conditions" value="胃食道逆流" class="btn-check" id="option13" />
+              <label for="option13">胃食道逆流</label>
+              <input type="checkbox" name="conditions" value="消化不良" class="btn-check" id="option14" />
+              <label for="option14">消化不良</label>
+            </div>
+            <br />
+            <div>
+              生活習慣:<br />
+              <input type="checkbox" name="conditions" value="生活壓力" class="btn-check" id="option15" />
+              <label for="option15">生活壓力</label>
+              <input type="checkbox" name="conditions" value="疲倦" class="btn-check" id="option16" />
+              <label for="option16">疲倦</label>
+              <input type="checkbox" name="conditions" value="體重控制" class="btn-check" id="option17" />
+              <label for="option17">體重控制</label>
+              <input type="checkbox" name="conditions" value="飲酒" class="btn-check" id="option18" />
+              <label for="option18">飲酒</label>
+              <input type="checkbox" name="conditions" value="青春痘" class="btn-check" id="option19" />
+              <label for="option19">青春痘</label>
+              <input type="checkbox" name="conditions" value="用眼過度" class="btn-check" id="option20" />
+              <label for="option20">用眼過度</label>
+            </div>
+            <br /><br />
+            <button type="submit" class="submitBtn">送出</button>
+            <button type="reset">清除</button>
+          </div>
+        </form>
+      </article>
+      <article id="about">
+        <h2 class="major">AI營養食物諮詢</h2>
+        <span class="image main"><img src="{{ url_for('static', filename='html_p/images/ai.jpg') }}" alt="" /></span>
+        <form method="post" action="#">
+          <h2>我想詢問AI.....</h2>
+          <textarea name="mytext" rows="6" cols="40" required></textarea>
+          <button type="submit" class="submitBtn">送出</button>
+          <button type="reset">清除</button>
+        </form>
+      </article>
+      <article id="contact">
+        <h2 class="major">Contact</h2>
+        <form method="post" action="#">
+          <div class="fields">
+            <div class="field half">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" />
+            </div>
+            <div class="field half">
+              <label for="email">Email</label>
+              <input type="text" name="email" id="email" />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea name="message" id="message" rows="4"></textarea>
+            </div>
+          </div>
+          <ul class="actions">
+            <li>
+              <input type="submit" value="Send Message" class="primary" />
+            </li>
+            <li><input type="reset" value="Reset" /></li>
+          </ul>
+        </form>
+        <ul class="icons">
+          <li>
+            <a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a>
+          </li>
+          <li>
+            <a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a>
+          </li>
+          <li>
+            <a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a>
+          </li>
+          <li>
+            <a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a>
+          </li>
+        </ul>
+      </article>
     </div>
+    <footer id="footer">
+      <p>
+        &copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.
+      </p>
+    </footer>
+  </div>
+  <div id="bg"></div>
+  <script src="{{ url_for('static', filename='html_p/assets/js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='html_p/assets/js/browser.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='html_p/assets/js/breakpoints.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='html_p/assets/js/util.js') }}"></script>
+  <script src="{{ url_for('static', filename='html_p/assets/js/main.js') }}"></script>
 </body>
 
 </html>
