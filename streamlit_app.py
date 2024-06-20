@@ -1,5 +1,6 @@
 import streamlit as st 
 import pandas as pd
+import streamlit.components.v1 as components
 
 st.balloons()
 
@@ -332,3 +333,50 @@ with col4:
 
 with col5:
     st.empty()
+
+html_content = """
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Streamlit App</title>
+    <style>
+        /* 样式设置 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 80%;
+            height: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <iframe src="https://angustu.streamlit.app/" allowfullscreen></iframe>
+    </div>
+</body>
+
+</html>
+"""
+
+components.html(html_content, height=600)
