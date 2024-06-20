@@ -124,3 +124,45 @@ ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 st.pyplot(fig1)
 
 
+
+pie1, pie2 = st.columns(2)
+
+    with pie1:
+        options_yonelik = {
+            "legend": {"top": "top"},
+            "tooltip": {"trigger": "item", "formatter": "{a} <br/>{b}: {c} ({d}%)"},
+            "textStyle": {
+                "fontFamily": "'Poppins', sans-serif",
+                "fontWeight": 400,
+                "fontSize": 18,
+            },
+            "series": [
+                {
+                    "name": "Kimlere Yönelik Çalışır",
+                    "type": "pie",
+                    "radius": [80, 200],
+                    "center": ["50%", "50%"],
+                    "roseType": "area",
+                    "label": {
+                        "rotate": 0,
+                        "width": 200,
+                        "fontFamily": "'Poppins', sans-serif",
+                        "fontWeight": 400,
+                        "fontSize": 15,
+                    },
+                    "labelLayout": {"draggable": True},
+                    "itemStyle": {"borderRadius": 8},
+                    "color": ["#ff9898", "#af98ff", "#ffd998"],
+                    "data": [
+                        {"value": round(val, 2), "name": name}
+                        for name, val in data.loc[:, "İlgili Giriş Noktası"]
+                        .value_counts()[:3]
+                        .to_dict()
+                        .items()
+                    ],
+                }
+            ],
+        }
+        st_echarts(options_yonelik, height="600px", width="100%")
+
+
